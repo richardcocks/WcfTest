@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading;
+using RandomNumberCore;
 
 namespace RandomNumberConsumerFrameworkClient
 {
@@ -9,7 +10,22 @@ namespace RandomNumberConsumerFrameworkClient
     {
         public static void Main(string[] args)
         {
-            var channelFactory = new ChannelFactory<RandomNumberCore.ITestServiceChannel>("localServiceEndpoint");
+            TestHttpBinding();
+        }
+
+        private static void TestHttpBinding()
+        {
+            var channelFactoryTcp = new ChannelFactory<RandomNumberCore.ITestServiceChannel>("localServiceEndpointTcp");
+            var channelFactoryHttps = new ChannelFactory<RandomNumberCore.ITestServiceChannel>("localServiceEndpointHttps");
+            
+            TestEndpoint(channelFactoryTcp);
+            TestEndpoint(channelFactoryHttps);
+            
+            channelFactoryTcp.Close();
+        }
+
+        private static void TestEndpoint(ChannelFactory<ITestServiceChannel> channelFactory)
+        {
             var service = channelFactory.CreateChannel();
             service.Open();
 
@@ -45,8 +61,6 @@ namespace RandomNumberConsumerFrameworkClient
             
             service.Close();
             service.Dispose();
-            channelFactory.Close();
-            
         }
     }
 }
