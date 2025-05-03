@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.ServiceModel;
 using System.Threading;
 
@@ -36,7 +37,7 @@ namespace RandomNumberConsumerFrameworkClient
                 
             
             var cts = new CancellationTokenSource(5_000);
-
+            var sw = Stopwatch.StartNew();
             Dictionary<int, int> bag = new Dictionary<int, int>();
 
             int counter = 0;
@@ -54,8 +55,12 @@ namespace RandomNumberConsumerFrameworkClient
             {
                 // ignored
             }
+            finally
+            {
+                sw.Stop();
+            }
 
-            Console.WriteLine($"{counter:N0}\n{bag.Count:N0}");
+            Console.WriteLine($"Counter:{counter:N0}. Successfully filled:{bag.Count:N0} in {sw.ElapsedMilliseconds}ms");
 
             
             service.Close();
