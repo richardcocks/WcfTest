@@ -13,11 +13,17 @@ namespace RandomNumberConsumerFrameworkClient
             var service = channelFactory.CreateChannel();
             service.Open();
 
+            // Warm the service up
+            for (int i = 0; i < 1_000; i++)
+            {
+                service.NextInt();
+            }
+                
+            
             var cts = new CancellationTokenSource(5_000);
 
             Dictionary<int, int> bag = new Dictionary<int, int>();
 
-            var r = new Random();
             int counter = 0;
             try
             {

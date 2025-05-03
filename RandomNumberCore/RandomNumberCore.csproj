@@ -16,5 +16,7 @@
   <ItemGroup>
     <PackageReference Include="CoreWCF.Primitives" Version="1.*" />
     <PackageReference Include="CoreWCF.Http" Version="1.*" />
+    <PackageReference Include="CoreWCF.NetTcp" Version="1.*" />
+    <PackageReference Include=" CoreWCF.NetNamedPipe" Version="1.*" />
   </ItemGroup>
 </Project>
