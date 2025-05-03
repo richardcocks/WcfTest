@@ -10,18 +10,20 @@ namespace RandomNumberConsumerFrameworkClient
     {
         public static void Main(string[] args)
         {
-            TestHttpBinding();
+            
+            TestHttpBinding("localServiceEndpointHttps");
+            TestHttpBinding("localServiceEndpointTcp");
+            TestHttpBinding("localServiceEndpointNamedPipe");
         }
 
-        private static void TestHttpBinding()
+        private static void TestHttpBinding(string endpointConfigurationName)
         {
-            var channelFactoryTcp = new ChannelFactory<RandomNumberCore.ITestServiceChannel>("localServiceEndpointTcp");
-            var channelFactoryHttps = new ChannelFactory<RandomNumberCore.ITestServiceChannel>("localServiceEndpointHttps");
+            var channelFactory = new ChannelFactory<RandomNumberCore.ITestServiceChannel>(endpointConfigurationName);
             
-            TestEndpoint(channelFactoryTcp);
-            TestEndpoint(channelFactoryHttps);
             
-            channelFactoryTcp.Close();
+            TestEndpoint(channelFactory);
+            
+            channelFactory.Close();
         }
 
         private static void TestEndpoint(ChannelFactory<ITestServiceChannel> channelFactory)
