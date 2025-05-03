@@ -26,9 +26,8 @@ namespace RandomNumberConsumerNet8
         {
             Console.WriteLine($"Testing {endpointBinding}");
             ArgumentNullException.ThrowIfNull(endpointBinding);
-            var channelFactory = new ChannelFactory<RandomNumberCore.ITestServiceChannel>(endpointBinding, new EndpointAddress(address)); ;
-
-            var service = channelFactory.CreateChannel();
+            using var channelFactory = new ChannelFactory<RandomNumberCore.ITestServiceChannel>(endpointBinding, new EndpointAddress(address)); ;
+            using var service = channelFactory.CreateChannel();
             service.Open();
 
             // Warm the service up
@@ -67,8 +66,6 @@ namespace RandomNumberConsumerNet8
 
             
             service.Close();
-            service.Dispose();
-
             channelFactory.Close();
         }
     }
