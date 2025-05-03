@@ -11,23 +11,15 @@ namespace RandomNumberConsumerFrameworkClient
         public static void Main(string[] args)
         {
             
-            TestHttpBinding("localServiceEndpointHttps");
-            TestHttpBinding("localServiceEndpointTcp");
-            TestHttpBinding("localServiceEndpointNamedPipe");
+            TestEndpointConfiguration("localServiceEndpointHttps");
+            TestEndpointConfiguration("localServiceEndpointTcp");
+            TestEndpointConfiguration("localServiceEndpointNamedPipe");
         }
 
-        private static void TestHttpBinding(string endpointConfigurationName)
+        private static void TestEndpointConfiguration(string endpointConfigurationName)
         {
             var channelFactory = new ChannelFactory<RandomNumberCore.ITestServiceChannel>(endpointConfigurationName);
-            
-            
-            TestEndpoint(channelFactory);
-            
-            channelFactory.Close();
-        }
 
-        private static void TestEndpoint(ChannelFactory<ITestServiceChannel> channelFactory)
-        {
             var service = channelFactory.CreateChannel();
             service.Open();
 
@@ -63,6 +55,8 @@ namespace RandomNumberConsumerFrameworkClient
             
             service.Close();
             service.Dispose();
+
+            channelFactory.Close();
         }
     }
 }
