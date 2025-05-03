@@ -7,4 +7,10 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="System.ServiceModel.Http" Version="8.1.2" />
+      <PackageReference Include="System.ServiceModel.NetNamedPipe" Version="8.1.2" />
+      <PackageReference Include="System.ServiceModel.NetTcp" Version="8.1.2" />
+    </ItemGroup>
+
 </Project>

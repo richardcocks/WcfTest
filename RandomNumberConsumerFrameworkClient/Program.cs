@@ -10,13 +10,19 @@ namespace RandomNumberConsumerFrameworkClient
         public static void Main(string[] args)
         {
             
+            Console.WriteLine("Starting tests");
             TestEndpointConfiguration("localServiceEndpointHttps");
             TestEndpointConfiguration("localServiceEndpointTcp");
             TestEndpointConfiguration("localServiceEndpointNamedPipe");
+            TestEndpointConfiguration("localServiceEndpointHttps");
+            TestEndpointConfiguration("localServiceEndpointTcp");
+            TestEndpointConfiguration("localServiceEndpointNamedPipe");
+
         }
 
         private static void TestEndpointConfiguration(string endpointConfigurationName)
         {
+            Console.WriteLine($"Testing {endpointConfigurationName}");
             var channelFactory = new ChannelFactory<RandomNumberCore.ITestServiceChannel>(endpointConfigurationName);
 
             var service = channelFactory.CreateChannel();

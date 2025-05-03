@@ -8,6 +8,6 @@
         <Reference Include="System.ServiceModel"/>
     </ItemGroup>
     <ItemGroup>
-
+      <ProjectReference Include="..\RandomNumberContract\RandomNumberContract.csproj" />
     </ItemGroup>
 </Project>
