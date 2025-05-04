@@ -34,7 +34,7 @@ class Program
         try
         {
             var valueStream = stream.ResponseStream;
-            while (await valueStream.MoveNext(cts.Token) && !cts.Token.IsCancellationRequested)
+            while (!cts.Token.IsCancellationRequested && await valueStream.MoveNext(cts.Token))
             {
                 var counterNo = Interlocked.Increment(ref counter);
                 bag.Add(counterNo, valueStream.Current.Value);
@@ -48,14 +48,10 @@ class Program
         finally
         {
             sw.Stop();
+            await channel.ShutdownAsync();
         }
         Console.WriteLine($"First:{bag[1]:N0}. Last:{bag[counter]:N0}");
         Console.WriteLine($"Counter:{counter:N0}. Successfully filled:{bag.Count:N0} in {sw.ElapsedMilliseconds}ms");
-
-
-
-        await channel.ShutdownAsync();
-    
     }
 
     private static async Task TestGrpcService(string address)
