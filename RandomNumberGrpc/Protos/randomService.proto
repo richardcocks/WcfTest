@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option csharp_namespace = "RandomNumberGrpc";
+
+package randomService;
+
+service RandomProvider {
+  rpc NextInt (NextIntRequest) returns (ValueWithSequence);
+  rpc Stream (NextIntStreamRequest) returns (stream ValueWithSequence);
+}
+
+message NextIntRequest {}
+message NextIntStreamRequest{}
+
+message ValueWithSequence {
+  int32 sequenceNumber = 1;
+  int32 Value = 2;
+}
