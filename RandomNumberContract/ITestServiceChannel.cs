@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.IO;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace RandomNumberCore
@@ -7,6 +8,20 @@ namespace RandomNumberCore
     {
         
     }
+    
+    public interface IStreamingServiceChannel : IStreamingService, IClientChannel
+    {
+        
+    }
+    
+    
+    [ServiceContract]
+    public interface IStreamingService
+    {
+        [OperationContract]
+        Stream GetRandomStream();
+    }
+
     
     [ServiceContract]
     public interface IService

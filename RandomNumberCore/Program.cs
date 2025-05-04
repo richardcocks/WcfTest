@@ -7,6 +7,7 @@ builder.Services.AddServiceModelMetadata();
 builder.Services.AddSingleton<IServiceBehavior, UseRequestHeadersForMetadataAddressBehavior>();
 builder.WebHost.UseKestrel(options =>
 {
+    options.AllowSynchronousIO = true;
     options.ListenLocalhost(7151, listenOptions =>
     {
         listenOptions.UseHttps();
@@ -32,7 +33,12 @@ app.UseServiceModel(serviceBuilder =>
 {
     
     serviceBuilder.AddService<Service>();
+    serviceBuilder.AddService<StreamingService>();
+    
     serviceBuilder.AddServiceEndpoint<Service, IService>(new BasicHttpBinding(BasicHttpSecurityMode.Transport), $"https://localhost:7151/Service.svc");
+    
+    serviceBuilder.AddServiceEndpoint<StreamingService, IStreamingService>(new BasicHttpBinding(BasicHttpSecurityMode.Transport){TransferMode = TransferMode.Streamed}, $"https://localhost:7151/StreamingService.svc");
+    
     serviceBuilder.AddServiceEndpoint<Service, IService>(new NetTcpBinding(SecurityMode.Transport),"net.tcp://localhost:808/Service/netTcp");
     
 #pragma warning disable CA1416
