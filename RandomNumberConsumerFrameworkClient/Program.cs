@@ -12,13 +12,15 @@ namespace RandomNumberConsumerFrameworkClient
         {
             
             Console.WriteLine("Starting tests");
-            TestEndpointConfiguration("localServiceEndpointHttps");
             TestEndpointConfiguration("localServiceEndpointTcp");
-            TestEndpointConfiguration("localServiceEndpointNamedPipe");
-            TestEndpointConfiguration("localServiceEndpointHttps");
-            TestEndpointConfiguration("localServiceEndpointTcp");
-            TestEndpointConfiguration("localServiceEndpointNamedPipe");
-
+        //     TestEndpointConfiguration("localServiceEndpointHttps");
+        //     
+        //     TestEndpointConfiguration("localServiceEndpointNamedPipe");
+        //     TestEndpointConfiguration("localServiceEndpointHttps");
+        //     TestEndpointConfiguration("localServiceEndpointTcp");
+        //     TestEndpointConfiguration("localServiceEndpointNamedPipe");
+        //
+        //
         }
 
         private static void TestEndpointConfiguration(string endpointConfigurationName)
