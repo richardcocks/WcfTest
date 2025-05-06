@@ -62,6 +62,7 @@ namespace RandomNumberConsumerFrameworkClient
                 sw.Stop();
             }
 
+            Console.WriteLine($"First:{bag[1]:N0}. Last:{bag[counter]:N0}");
             Console.WriteLine($"Counter:{counter:N0}. Successfully filled:{bag.Count:N0} in {sw.ElapsedMilliseconds}ms");
 
             

@@ -4,17 +4,19 @@ using System.ServiceModel.Channels;
 
 namespace RandomNumberConsumerNet8
 {
-    internal class Program
+    internal static class Program
     {
         public static async Task Main(string[] args)
         {
             
             Console.WriteLine("Starting tests");
             
-            await TestStreamingEndpoint(new BasicHttpBinding(BasicHttpSecurityMode.Transport){TransferMode = TransferMode.Streamed, MaxReceivedMessageSize = 1_000_000_000 }, "https://localhost:7151/StreamingService.svc");
-            await TestStreamingEndpoint(new BasicHttpBinding(BasicHttpSecurityMode.Transport){TransferMode = TransferMode.Streamed, MaxReceivedMessageSize = 1_000_000_000 }, "https://localhost:7151/StreamingService.svc");
-            await TestStreamingEndpoint(new BasicHttpBinding(BasicHttpSecurityMode.Transport){TransferMode = TransferMode.Streamed, MaxReceivedMessageSize = 1_000_000_000 }, "https://localhost:7151/StreamingService.svc");
-            
+            TestEndpointConfiguration(new NetTcpBinding(SecurityMode.Transport), "net.tcp://localhost:808/Service/netTcp");
+            //
+             await TestStreamingEndpoint(new BasicHttpBinding(BasicHttpSecurityMode.Transport){TransferMode = TransferMode.Streamed, MaxReceivedMessageSize = 1_000_000_000 }, "https://localhost:7151/StreamingService.svc");
+             await TestStreamingEndpoint(new BasicHttpBinding(BasicHttpSecurityMode.Transport){TransferMode = TransferMode.Streamed, MaxReceivedMessageSize = 1_000_000_000 }, "https://localhost:7151/StreamingService.svc");
+             await TestStreamingEndpoint(new BasicHttpBinding(BasicHttpSecurityMode.Transport){TransferMode = TransferMode.Streamed, MaxReceivedMessageSize = 1_000_000_000 }, "https://localhost:7151/StreamingService.svc");
+            //
             
             // TestEndpointConfiguration(new BasicHttpBinding(BasicHttpSecurityMode.Transport), "https://localhost:7151/Service.svc");
             // TestEndpointConfiguration(new NetTcpBinding(SecurityMode.Transport), "net.tcp://localhost:808/Service/netTcp");
@@ -30,17 +32,17 @@ namespace RandomNumberConsumerNet8
         {
             Console.WriteLine($"Testing streaming {endpointBinding}");
             ArgumentNullException.ThrowIfNull(endpointBinding);
-            using var channelFactory = new ChannelFactory<RandomNumberCore.IStreamingServiceChannel>(endpointBinding, new EndpointAddress(address)); ;
+            await using var channelFactory = new ChannelFactory<RandomNumberCore.IStreamingServiceChannel>(endpointBinding, new EndpointAddress(address));
             using var service = channelFactory.CreateChannel();
             service.Open();
             
             var cts = new CancellationTokenSource(5_000);
             var sw = Stopwatch.StartNew();
 
-            Dictionary<int, int> bag = new Dictionary<int, int>();
+            Dictionary<int, int> bag = new Dictionary<int, int>(3_000_000);
 
-            int counter = 0;
-            using var randomStream = service.GetRandomStream();
+            var counter = 0;
+            await using var randomStream = service.GetRandomStream();
             
             // We'll test other lengths later.
             
@@ -71,7 +73,7 @@ namespace RandomNumberConsumerNet8
         {
             Console.WriteLine($"Testing {endpointBinding}");
             ArgumentNullException.ThrowIfNull(endpointBinding);
-            using var channelFactory = new ChannelFactory<RandomNumberCore.ITestServiceChannel>(endpointBinding, new EndpointAddress(address)); ;
+            using var channelFactory = new ChannelFactory<RandomNumberCore.ITestServiceChannel>(endpointBinding, new EndpointAddress(address));
             using var service = channelFactory.CreateChannel();
             service.Open();
 
