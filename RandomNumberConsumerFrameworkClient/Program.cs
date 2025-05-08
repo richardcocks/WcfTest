@@ -10,7 +10,6 @@ namespace RandomNumberConsumerFrameworkClient
     {
         public static void Main(string[] args)
         {
-            
             Console.WriteLine("Starting tests");
             TestEndpointConfiguration("localServiceEndpointTcp");
         //     TestEndpointConfiguration("localServiceEndpointHttps");

@@ -11,11 +11,12 @@ namespace RandomNumberConsumerNet8
             
             Console.WriteLine("Starting tests");
             
-            TestEndpointConfiguration(new NetTcpBinding(SecurityMode.Transport), "net.tcp://localhost:808/Service/netTcp");
+            // TestEndpointConfiguration(new NetTcpBinding(SecurityMode.Transport), "net.tcp://localhost:808/Service/netTcp");
+            await TestStreamingEndpoint(new NetTcpBinding(SecurityMode.Transport){TransferMode = TransferMode.Streamed, MaxReceivedMessageSize = 1_000_000_000}, "net.tcp://localhost:808/Service/netTcp/streaming");
             //
-             await TestStreamingEndpoint(new BasicHttpBinding(BasicHttpSecurityMode.Transport){TransferMode = TransferMode.Streamed, MaxReceivedMessageSize = 1_000_000_000 }, "https://localhost:7151/StreamingService.svc");
-             await TestStreamingEndpoint(new BasicHttpBinding(BasicHttpSecurityMode.Transport){TransferMode = TransferMode.Streamed, MaxReceivedMessageSize = 1_000_000_000 }, "https://localhost:7151/StreamingService.svc");
-             await TestStreamingEndpoint(new BasicHttpBinding(BasicHttpSecurityMode.Transport){TransferMode = TransferMode.Streamed, MaxReceivedMessageSize = 1_000_000_000 }, "https://localhost:7151/StreamingService.svc");
+             // await TestStreamingEndpoint(new BasicHttpBinding(BasicHttpSecurityMode.Transport){TransferMode = TransferMode.Streamed, MaxReceivedMessageSize = 1_000_000_000 }, "https://localhost:7151/StreamingService.svc");
+             // await TestStreamingEndpoint(new BasicHttpBinding(BasicHttpSecurityMode.Transport){TransferMode = TransferMode.Streamed, MaxReceivedMessageSize = 1_000_000_000 }, "https://localhost:7151/StreamingService.svc");
+             // await TestStreamingEndpoint(new BasicHttpBinding(BasicHttpSecurityMode.Transport){TransferMode = TransferMode.Streamed, MaxReceivedMessageSize = 1_000_000_000 }, "https://localhost:7151/StreamingService.svc");
             //
             
             // TestEndpointConfiguration(new BasicHttpBinding(BasicHttpSecurityMode.Transport), "https://localhost:7151/Service.svc");

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Description;
@@ -11,6 +12,15 @@ namespace RandomNumberFrameworkConsole
         [OperationContract]
         CompositeType NextInt();
     }
+    
+    [ServiceContract]
+    public interface IStreamingService
+    {
+        [OperationContract]
+        Stream GetRandomStream();
+    }
+
+    
 
     // Use a data contract as illustrated in the sample below to add composite types to service operations.
     [DataContract]
@@ -22,6 +32,31 @@ namespace RandomNumberFrameworkConsole
         public int SequenceNumber { get; set; }
     }
     
+    public class RandomNumberStreamingService : IStreamingService
+    {
+        private readonly Random _random;
+
+        public static void Configure(ServiceConfiguration config)
+        {
+            var contract = ContractDescription.GetContract(typeof(IStreamingService));
+            ServiceEndpoint se = new ServiceEndpoint(contract, new NetTcpBinding(){TransferMode = TransferMode.Streamed}, new EndpointAddress("net.tcp://localhost:808/Service/netTcp/streaming"));
+            config.AddServiceEndpoint(se);
+
+            config.Description.Behaviors.Add(new ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
+        }
+        
+        public RandomNumberStreamingService()
+        {
+            this._random = new Random();
+        }
+        public Stream GetRandomStream()
+        {
+            return new RandomStream(this._random);
+        }
+    }
+
+    
+
     public class RandomNumberService : IService
     {
         private readonly Random _random = new Random();
