@@ -39,7 +39,7 @@ namespace RandomNumberFrameworkConsole
         public static void Configure(ServiceConfiguration config)
         {
             var contract = ContractDescription.GetContract(typeof(IStreamingService));
-            ServiceEndpoint se = new ServiceEndpoint(contract, new NetTcpBinding(){TransferMode = TransferMode.Streamed}, new EndpointAddress("net.tcp://localhost:808/Service/netTcp/streaming"));
+            ServiceEndpoint se = new ServiceEndpoint(contract, new NetTcpBinding(){TransferMode = TransferMode.Streamed, Security = new NetTcpSecurity(){Mode = SecurityMode.None}}, new EndpointAddress("net.tcp://localhost:808/Service/netTcp/streaming"));
             config.AddServiceEndpoint(se);
 
             config.Description.Behaviors.Add(new ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
