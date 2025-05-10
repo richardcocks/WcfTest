@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "GrpcClientDotNet";
+option csharp_namespace = "RandomNumberGrpc";
 
 package randomService;
 
@@ -13,6 +13,6 @@ message NextIntRequest {}
 message NextIntStreamRequest{}
 
 message ValueWithSequence {
-  int32 sequenceNumber = 1;
-  int32 Value = 2;
+  int64 sequenceNumber = 1;
+  int64 Value = 2;
 }

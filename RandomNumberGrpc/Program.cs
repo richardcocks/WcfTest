@@ -10,6 +10,7 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddGrpc();
+        builder.Services.AddSingleton<RandomProviderService>();
         
         var app = builder.Build();
 
