@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.IO;
 using System.Runtime.Serialization;
 
@@ -30,7 +31,7 @@ namespace RandomNumberFrameworkConsole
     
         public override int Read(byte[] buffer, int offset, int count)
         {
-            var internalBuffer = new byte[count];
+            var internalBuffer = ArrayPool<byte>.Shared.Rent(count);
             _random.NextBytes(internalBuffer);
             internalBuffer.CopyTo(buffer, offset);
             _sequence+=count;
