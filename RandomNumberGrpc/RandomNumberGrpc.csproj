@@ -4,15 +4,19 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>RandomNumerGrpc</RootNamespace>
+        <RootNamespace>RandomNumberGrpc</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
         <Protobuf Include="Protos\randomService.proto" GrpcServices="Server" />
     </ItemGroup>
-
+    
     <ItemGroup>
         <PackageReference Include="Grpc.AspNetCore" Version="2.57.0"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\RandomSource\RandomSource.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,39 +1,40 @@
 using Grpc.Core;
+using RandomSource;
+
 
 namespace RandomNumberGrpc.Services;
 
-public class RandomProviderService : RandomProvider.RandomProviderBase
+public sealed class RandomProviderService(ILogger<RandomProviderService> logger)
+    : RandomProvider.RandomProviderBase, IDisposable
 {
-    private readonly ILogger<RandomProviderService> _logger;
+    private readonly IEnumerator<SequenceValue> _enumerator = new RandomSource.RandomProvider(32).GetEnumerator();
 
-    private int _sequence;
-    
-    public RandomProviderService(ILogger<RandomProviderService> logger)
-    {
-        _logger = logger;
-    }
 
     public override async Task Stream(NextIntStreamRequest request, IServerStreamWriter<ValueWithSequence> responseStream, ServerCallContext context)
     {
-        while (!context.CancellationToken.IsCancellationRequested)
+        
+        logger.LogDebug("Streaming starting at {enumerator}", _enumerator.Current);
+        while (!context.CancellationToken.IsCancellationRequested && _enumerator.MoveNext())
         {
-            var sequence = Interlocked.Increment(ref _sequence);
-            
             await responseStream.WriteAsync(new ValueWithSequence
             {
-                SequenceNumber = sequence,
-                Value = Random.Shared.Next()
-            });    
+                SequenceNumber = _enumerator.Current.Sequence,
+                Value = _enumerator.Current.Value
+            });
         }
     }
 
     public override Task<ValueWithSequence> NextInt(NextIntRequest request, ServerCallContext context)
     {
-        var sequence = Interlocked.Increment(ref _sequence);
+        _enumerator.MoveNext();
         return Task.FromResult(new ValueWithSequence
         {
-            SequenceNumber = sequence,
-            Value = Random.Shared.Next()
+            SequenceNumber = _enumerator.Current.Sequence,
+            Value = _enumerator.Current.Value
         });
+    }
+    public void Dispose()
+    {
+        _enumerator.Dispose();
     }
 }
