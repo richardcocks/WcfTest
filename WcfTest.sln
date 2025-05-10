@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalClient", "LocalClient\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomSource", "RandomSource\RandomSource.csproj", "{C85B4087-0604-4A5B-9547-26ED5C3E32E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalClientFramework", "LocalClientFramework\LocalClientFramework.csproj", "{2BD5F352-13EB-44EA-B842-667EEDF68D05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,11 +143,24 @@ Global
 		{C85B4087-0604-4A5B-9547-26ED5C3E32E6}.Release|x64.Build.0 = Release|Any CPU
 		{C85B4087-0604-4A5B-9547-26ED5C3E32E6}.Release|x86.ActiveCfg = Release|Any CPU
 		{C85B4087-0604-4A5B-9547-26ED5C3E32E6}.Release|x86.Build.0 = Release|Any CPU
+		{2BD5F352-13EB-44EA-B842-667EEDF68D05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BD5F352-13EB-44EA-B842-667EEDF68D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BD5F352-13EB-44EA-B842-667EEDF68D05}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2BD5F352-13EB-44EA-B842-667EEDF68D05}.Debug|x64.Build.0 = Debug|Any CPU
+		{2BD5F352-13EB-44EA-B842-667EEDF68D05}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2BD5F352-13EB-44EA-B842-667EEDF68D05}.Debug|x86.Build.0 = Debug|Any CPU
+		{2BD5F352-13EB-44EA-B842-667EEDF68D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BD5F352-13EB-44EA-B842-667EEDF68D05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BD5F352-13EB-44EA-B842-667EEDF68D05}.Release|x64.ActiveCfg = Release|Any CPU
+		{2BD5F352-13EB-44EA-B842-667EEDF68D05}.Release|x64.Build.0 = Release|Any CPU
+		{2BD5F352-13EB-44EA-B842-667EEDF68D05}.Release|x86.ActiveCfg = Release|Any CPU
+		{2BD5F352-13EB-44EA-B842-667EEDF68D05}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BEB6F579-6C49-42FA-8973-1AB098D0D6CD} = {3DB28320-74B9-4EE0-A7E7-714B9FF7ED0C}
+		{2BD5F352-13EB-44EA-B842-667EEDF68D05} = {3DB28320-74B9-4EE0-A7E7-714B9FF7ED0C}
 	EndGlobalSection
 EndGlobal
