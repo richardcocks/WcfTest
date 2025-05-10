@@ -20,7 +20,7 @@ public sealed class RandomProviderService(ILogger<RandomProviderService> logger)
             {
                 SequenceNumber = _enumerator.Current.Sequence,
                 Value = _enumerator.Current.Value
-            });
+            }, context.CancellationToken);
         }
     }
 
