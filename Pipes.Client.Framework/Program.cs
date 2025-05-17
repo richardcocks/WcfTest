@@ -30,8 +30,7 @@ namespace Pipes.Client.Framework
                     _ = await pipeClient.ReadAsync(buffer, 0, 4, cts.Token);
                     var length = BitConverter.ToInt32(buffer, 0);
                     var streamBuffer = ArrayPool<byte>.Shared.Rent(length);
-
-                    // We can't use ReadExactlyAsync because streamBuffer might be the wrong length
+                    
                     _ = await pipeClient.ReadAsync(streamBuffer,0,length, cts.Token);
                     var sequenceVals =
                         MessagePack.MessagePackSerializer.Deserialize<IEnumerable<SequenceValue>>(streamBuffer,
