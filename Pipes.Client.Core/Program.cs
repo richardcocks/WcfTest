@@ -17,7 +17,6 @@ public static class Program
         await pipeClient.ConnectAsync(30, cts.Token);
 	
         var buffer = new byte[4];
-        var arrayPool = ArrayPool<byte>.Create();
         var bag = new HashSet<long>();
 		
         var sw = Stopwatch.StartNew();
